@@ -1,10 +1,9 @@
 #!/bin/bash
 
 
-
 # create folders
-declare -a arr=("raw" "jpg" )
-declare -a arr_jpg=("640x480" "2048x1536" "_original")
+arr=("raw" "jpg")
+arr_jpg=("640x480" "2048x1536" "_original")
 
 for i in "${arr[@]}"
 do
@@ -23,15 +22,23 @@ do
 fi
 done
 
+pwd
 
-# move raw files to raw folder                  #todo check if files exist
-#if [-f *.NEF ]; then
+# move raw files to raw folder                  
+if [[ -n $(echo *.NEF) ]]; then 
    mv *.NEF ./raw
-#fi
-#if [-f *.JPG ]; then
+else 
+   echo "no *.NEF found"
+fi
+
+# move jpegs
+if [[ -n $(echo *.JPG) ]]; then
+   pwd
    mv *.JPG ./jpg
 
    cd ./jpg
-   mv *.JPG ./_original
-#fi
+   mv ../*.JPG ./_original
+else 
+   echo "no *.JPG not found"
+fi
 
